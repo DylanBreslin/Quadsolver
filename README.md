@@ -1,0 +1,2 @@
+# Quadsolver
+a quadratic solver
