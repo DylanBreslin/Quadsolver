@@ -6,47 +6,83 @@
   <title>Bootstrap Example</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
-  <script type="text/javascript" src="Java_Script.js"></script>
+  <link rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+  <script src="jquery.min.js"></script>
+  <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+  <script src="quadScript.js"></script>
   <!-- styles to override bootstrap settings or add our own styles -->
   <style>
-    .container-fluid {
-      background-image: url("math.jpeg");
-      color: rgb(216,97,182);
-    }
     /* Set gray background color and 100% height */
     .sidenav {
       height: 100%;
-      min-width: -width: 150px);
+      min-width: 200px;
     }
     /* On small screens, set height to 'auto' for sidenav and grid */
-    @media screen and (max-width: -width: 767px) {
+    @media screen and (max-width: 767px) {
       .sidenav {
         height: auto;
         padding: 15px;
       }
       .row.content {height:auto;} 
+      .responsive-br {
+        display: none;
+      }
     }
-    .coeff {
+    @media screen and (max-width: 452px) {
+      .px452 {
+        display: initial;
+      }
+    }
+    @media screen and (max-width: 336px) {
+      .responsive-br {
+        display: initial;
+      }
+    }
+    body{
+      background-image: url("mathalso.jpeg");
+    }
+    .pink-div {
       width: 80%;
-      background-color: orange;
+      background-image: url("math.jpeg");
+      color: orange;
       padding: 10px;
       border-radius: 20px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+    .btn {
+      margin-top: 5px;
     }
     canvas {
       display: block;
       border-style: dotted;
       border-width: 5px;
-      background-color: blue;
+      background-color: green;
       margin-top: 5px;
+      /*width: 90%;*/
+      margin-left: auto;
+      margin-right: auto;
+    }
+    .inputSpan {
+      text-align: center;
+    }
+    #second-pink-div {
+      margin-top: 5px;
+    }
+    .myZoom {
+      width: 35px;
+    }
+    .formInfo {
+      text-align: center;
+    }
+    .container-fluid {
+      /*background-image: url("http://i2.kym-cdn.com/photos/images/original/000/833/280/f87.png");*/
     }
   </style>
 
   </head>
-  
-  <body onload="init()">
+  <body onload="init.fullReset()">
    <!--  Nav bar that is responsive (container-fluid with data-toggle at collapse) -->
    <nav class="navbar navbar-inverse">
     <div class="container-fluid">
@@ -60,8 +96,8 @@
       </div>
       <div class="collapse navbar-collapse" id="myNavbar">
         <ul class="nav navbar-nav">
-          <li class="active"><a href="#">Linear Grapher</a></li>
-          <li><a href="#2">Quadratic Grapher</a></li>
+          <li><a href="#">Linear Grapher</a></li>
+          <li class="active"><a href="#2">Quadratic Grapher</a></li>
           <li><a href="#3">Cubic Grapher</a></li>
         </ul>
       </div>
@@ -72,20 +108,39 @@
   <div class="container-fluid">    
     <div class="row content">
       <div class="col-sm-2 sidenav">
-        <div class="coeff">
+        <div class="pink-div">
           <p class="formInfo">Coefficients go here<br>
 
-            a = <input size="5" type="text" id="quadA" value="1"> <br>
-            b = <input size="5" type="text" id="linB" value="0"> <br>
-            c = <input size="5" type="text" id="constant" value="0"> <br>
-            <button class="btn" onclick="QF()">Submit Values</button>
+            <span class="inputSpan">a = <input size="2" type="text" id="quadA" value="1"></span> <br class="responsive-br">
+            <span class="inputSpan">b = <input size="2" type="text" id="linB" value="0"></span> <br class="responsive-br">
+            <span class="inputSpan">c = <input size="2" type="text" id="constant" value="0"></span> <br class="responsive-br">
+
+            <p class="formInfo">Adjust graph/grid size in px<br>
+
+            <span class="inputSpan">width = <input size="3" type="text" id="canvasWidth" value="600"></span> <br class="responsive-br px452">
+            <span class="inputSpan">height = <input size="3" type="text" id="canvasHeight" value="400"></span> <br class="responsive-br px452">
+            <span class="inputSpan">grid = <input size="3" type="text" id="canvasGridSize" value="10"></span> <br>
+            <button type="button" class="btn btn-default btn-sm myZoom" onclick="quadGrapher.zoom.in()">
+              <span class="glyphicon glyphicon-zoom-in"></span>
+            </button> <br class="responsive-br">
+            <button type="button" class="btn btn-default btn-sm myZoom" onclick="quadGrapher.zoom.out()">
+              <span class="glyphicon glyphicon-zoom-out"></span>
+            </button> <br class="responsive-br">
+            <button type="button" class="btn btn-default btn-sm" onclick="quadGrapher.zoom.reset()">
+              Reset Zoom
+            </button> <br>
           </p>
+            <button class="btn" onclick="init.recalc();">Submit Values</button>
         </div>
-      </div>
-      <div id="answers">
-        <p id="vertex"></p>
-        <p id="solution1"></p>
-        <p id ="solution2"></p>
+        <div class="pink-div" id="second-pink-div">
+          <div id="answers">
+            <p class="vertex"></p>
+            <p id="solution1"></p>
+            <p id="solution2"></p>
+            <p id="vertexForm"></p>
+            <p id="pointLocation"></p>
+          </div>
+        </div>
       </div>
       <div class="col-sm-8 text-left"> 
         <canvas class="canvasGrids" id="mycanvas"></canvas>

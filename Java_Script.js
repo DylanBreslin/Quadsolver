@@ -8,6 +8,7 @@ function init() {
   h = canvas.height = 400;
   console.log('canvas is loaded into context');
   grid();
+  graphQuad();
 }  // close init
 
 function QF() {
@@ -86,17 +87,17 @@ context.lineTo(w-10, h/2)
 context.stroke();
 
 }  // close grid
-function graphQuad () {
+function graphQuad() {
   for (var i = 0; i < w; i++) {
     x = (w/2-i)/k;
     y = c*1+b*x+a*Math.pow(x,2);
-    nx =  (w/2 - (i + 1))/k;
+    nx = (w/2 - (i + 1))/k;
     ny = c*1+b*nx+a*Math.pow(nx,2); 
     context.beginPath();
     context.lineWidth = 2;
     context.strokeStyle = "Black";
     context.moveTo(w/2+x*k, h/2-y*k);
-    context.lineTo(w/2+nx*k, h/2-y*k);
+    context.lineTo(w/2+nx*k, h/2-ny*k);
     context.stroke();
   }
 }
