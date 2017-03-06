@@ -102,15 +102,15 @@ var quadGrapher = {
       ny =  evaluate(nx);
       context.beginPath();
       context.lineWidth = 2;
-      context.strokeStyle = "Red";
+      context.strokeStyle = "darkblue";
       context.moveTo(wHalf+x*k, hHalf-y*k);
       context.lineTo(wHalf+nx*k, hHalf-ny*k);
       context.stroke();
     }
     //graphs x intercepts and vertex dots
-    if (x1Exists) {graphDot("blue", x1*k+wHalf, hHalf);}
-    if (x2Exists) {graphDot("orange", x2*k+wHalf, hHalf);}
-    graphDot("green", vX*k+wHalf, -(vY*k)+hHalf);
+    if (x1Exists) {graphDot("black", x1*k+wHalf, hHalf);}
+    if (x2Exists) {graphDot("white", x2*k+wHalf, hHalf);}
+    graphDot("red", vX*k+wHalf, -(vY*k)+hHalf);
 
     //graph vertical line of symmetry
     context.setLineDash([10, 10]);
